@@ -7,7 +7,7 @@ class Message:
 		self.hash = None
 		self.prev_hash = None
 		self.timestamp = time.time()
-		self.size = len(data.encode('utf-8'))   # length in bytes
+		# self.size = len(str(data.encode('utf-8')))   # length in bytes
 		self.data = data
 		self.payload_hash = self._hash_payload()
 
@@ -92,6 +92,7 @@ class Block:
 class SimpleChain:
 	def __init__(self):
 		self.chain = []
+		self.publicKeys = {}
 
 	def add_block(self, block):
 		""" Add a block if valid."""
@@ -100,6 +101,16 @@ class SimpleChain:
 		block.seal()
 		block.validate()
 		self.chain.append(block)
+		self.publicKeys[block.messages[0].data[0]] =  block.messages[0].data[1]
+
+	def verifyRegistered(self, device_id):
+		return device_id in self.publicKeys
+
+	def verifySignature(self, public_key, signature, payload):
+		return True
+
+	def getPublicKey(self, device_id):
+		return self.publicKeys[device_id]
 
 	def validate(self):
 		""" Validates each block, in order.
