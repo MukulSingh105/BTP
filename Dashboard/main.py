@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-
+import time
 
 
 st.set_page_config(layout="wide")
@@ -46,7 +46,7 @@ add_selectbox = st.sidebar.selectbox(
 
 if st.session_state.cat == "Network":
 
-    data = pd.read_excel("Devices.xlsx")
+    data = pd.read_csv("Devices.csv")
 
     df = data[["IP", "Port", "Nature"]]
 
@@ -102,13 +102,24 @@ if st.session_state.cat == "Network":
     ''', use_container_width=True)
 
 if st.session_state.cat == "Devices":
-    st.write("hello")
+    chain = pd.read_csv("Devices.csv")
+    st.legacy_caching.clear_cache()
+    for index, row in chain.iterrows():
+        time.sleep(1)
+        with st.expander("Device-"+str(index), expanded=False):
+            st.write("TimeStamp : " + str(row["Time"]))
+            st.write("Status : " + str(row["Status"]))
+            st.write("IP Address : " + str(row["IP"]))
+            st.write("Port Number : " + str(row["Port"]))
+            st.write("Type : " + str(row["Nature"]))
 
 
 if st.session_state.cat == "Blockchain":
-    chain = pd.read_excel("Blockchain.xlsx")
+    chain = pd.read_csv("Blockchain.csv")
+    st.legacy_caching.clear_cache()
     for index, row in chain.iterrows():
-        with st.expander("Block-"+str(index)):
+        time.sleep(1)
+        with st.expander("Block-"+str(index), expanded=False):
             st.write("TimeStamp : " + str(row["Time"]))
             st.write("Authenticators : " + str(row["Num_Auth"]))
             st.write("Miner ID : " + str(row["Added By"]))
@@ -121,5 +132,5 @@ if st.session_state.cat == "Cloud Monitoring":
     st.subheader("Features Extracted")
     st.dataframe(features)
     st.subheader("Results")
-    results = pd.read_excel("Cloud.xlsx")
+    results = pd.read_csv("Cloud.csv")
     st.dataframe(results)

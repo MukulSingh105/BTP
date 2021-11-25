@@ -1,0 +1,9 @@
+IP,Port,Nature,Status,Time
+127.0.0.1,1768,Publisher,1,0
+127.0.0.2,9753,Publisher,1,0
+127.0.0.3,2452,Publisher,1,1
+127.0.0.4,5001,Publisher,1,2
+127.0.0.4,4965,Subscriber,1,4
+127.0.0.5,5732,Subscriber,1,4
+127.0.0.6,8372,Publisher,2,3
+127.0.0.8,8372,Publisher,1,7
