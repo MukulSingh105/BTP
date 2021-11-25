@@ -126,6 +126,8 @@ if st.session_state.cat == "Blockchain":
             st.write("Merkle Root Hash : " + str(row["hash Merkle Root"]))
             st.write("Block Hash : " + str(row["Block Hash"]))
             st.write("Previous Block Hash : " + str(row["hash Prev Block"]))
+            if str(row["BlockListed"]) != "nan":
+                st.error("Block-" + str(index) + " is blocked. IP address of device is: " + str(row["BlockListed"]))
 
 if st.session_state.cat == "Cloud Monitoring":
     features = pd.read_csv("vinchuca.csv")
